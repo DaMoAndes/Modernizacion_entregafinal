@@ -1,1 +1,1 @@
-from .courses import app
+from .CoursesApp import app

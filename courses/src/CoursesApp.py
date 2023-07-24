@@ -2,7 +2,7 @@ from flask import Flask, jsonify, Response
 from .modelos import db
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
-from .vistas import ListCourse
+from .vistas.CoursesLogic import Courses,Course, GetNumCoursesByTimeRange, SoftDelete, RestoreDeletedCourse, GetNumCoursesByTimeRange
 
 app = Flask(__name__)
 app.config.from_object("src.config.Config")
@@ -18,6 +18,10 @@ def hello_world():
     return "pong", 200
 
 api = Api(app)
-api.add_resource(ListCourse, '/courses')
+api.add_resource(Courses, '/Courses')
+api.add_resource(Course, '/Course/<courseId>')
+api.add_resource(SoftDelete, '/Softgelete')
+api.add_resource(RestoreDeletedCourse, '/RestoreDeletedCourse')
+api.add_resource(GetNumCoursesByTimeRange, '/CoursesByTimeRange')
 
 jwt = JWTManager(app)

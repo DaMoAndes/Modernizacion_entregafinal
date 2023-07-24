@@ -6,18 +6,18 @@ from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 db = SQLAlchemy()
 
 
-class Course(db.Model):
+class CourseModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     timeZone = db.Column(db.String(50))
     institute = db.Column(db.String(50))
     createdAt = db.Column(db.DateTime)
-    #deletedAt = db.Column(db.DateTime)
+    deletedAt = db.Column(db.String(20))
 
 
-class CourseSchema(SQLAlchemyAutoSchema):
+class CourseModelSchema(SQLAlchemyAutoSchema):
     class Meta:
-        model = Course
+        model = CourseModel
         include_relationships = True
         load_instance = True
 

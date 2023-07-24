@@ -1,1 +1,1 @@
-from .modelos import db, Course, CourseSchema
+from .CourseModel import db, CourseModel, CourseModelSchema

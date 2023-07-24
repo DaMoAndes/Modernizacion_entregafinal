@@ -1,1 +1,1 @@
-from .vistas import ListCourse
+from .CoursesLogic import Course, GetNumCoursesByTimeRange, RestoreDeletedCourse
