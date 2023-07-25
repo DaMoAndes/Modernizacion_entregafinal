@@ -1,11 +1,12 @@
+import json
 from urllib.parse import urlparse, parse_qs
 from flask_restful import Resource
 from ..modelos import  db, CourseModel, CourseModelSchema
 from flask import request, Response
 import datetime
 
-
 courseModel_schema = CourseModelSchema()
+
 class Courses(Resource):
     def post(self):
         if  request.is_json:
@@ -36,20 +37,47 @@ class Courses(Resource):
             return {
                 "msg": "No se pudo crear el curso"
                 }, 400
+    
     def get(self):
-        courses = CourseModel.query.all()
-        if( not courses):
-            return {"msg": "No existen cursos"}, 401
-        return [(course.id) for course in courses], 200
+        if  request.is_json:
+            id_list = request.get_json()
+            courses_list = []
+            for id in id_list:
+                curso = CourseModel.query.filter((CourseModel.id==int(id))).first()
+                if curso != None:
+                    courses_list.append(curso)
+            if courses_list == []:
+                return {"msg": "No existen los cursos"}, 401
+            return json.dumps(courses_list)
+        else:
+            return {
+                "msg": "No se pudo hacer la búsqueda"
+                }, 400
     
 class GetNumCoursesByTimeRange(Resource):
     pass
 
 class RestoreDeletedCourse(Resource):
-    pass
+    def put(self, courseId):
+        course = CourseModel.query.get(int(courseId))
+        if not course:
+            return {
+                "msg": "No se encuentra el curso."
+                }, 400
+        else:
+            course.deletedAt = None
+            return "Course was restored"
 
 class SoftDelete(Resource):
-    pass
+    def put(self, courseId):
+        course = CourseModel.query.get(int(courseId))
+        if not course:
+            return {
+                "msg": "No se encuentra el curso."
+                }, 400
+        else:
+            course.deletedAt = datetime.datetime.now()
+            return str(course.deletedAt)
 
 class Course(Resource):
     def get(self, courseId):
@@ -73,6 +101,7 @@ class Course(Resource):
             return {
                 "msg": "Curso Eliminado correctamente."
             }, 200
+    
     def put(self):
         if request.is_json:
             parse_json = request.get_json()

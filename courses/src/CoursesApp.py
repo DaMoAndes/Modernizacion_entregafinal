@@ -20,8 +20,8 @@ def hello_world():
 api = Api(app)
 api.add_resource(Courses, '/Courses')
 api.add_resource(Course, '/Course/<courseId>')
-api.add_resource(SoftDelete, '/Softgelete')
-api.add_resource(RestoreDeletedCourse, '/RestoreDeletedCourse')
+api.add_resource(SoftDelete, '/Softdelete/<courseId>')
+api.add_resource(RestoreDeletedCourse, '/RestoreDeletedCourse/<courseId>')
 api.add_resource(GetNumCoursesByTimeRange, '/CoursesByTimeRange')
 
 jwt = JWTManager(app)

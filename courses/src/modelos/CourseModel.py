@@ -12,7 +12,7 @@ class CourseModel(db.Model):
     timeZone = db.Column(db.String(50))
     institute = db.Column(db.String(50))
     createdAt = db.Column(db.DateTime)
-    deletedAt = db.Column(db.String(20))
+    deletedAt = db.Column(db.DateTime)
 
 
 class CourseModelSchema(SQLAlchemyAutoSchema):
