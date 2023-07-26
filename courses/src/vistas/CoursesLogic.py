@@ -1,7 +1,7 @@
 import json
 from urllib.parse import urlparse, parse_qs
 from flask_restful import Resource
-from ..modelos import  db, CourseModel, CourseModelSchema
+from modelos import  db, CourseModel, CourseModelSchema
 from flask import request, Response
 import datetime
 
@@ -21,7 +21,7 @@ class Courses(Resource):
                     timeZone = parse_json.get('timeZone', None),
                     institute = parse_json.get('institute', None),
                     createdAt = datetime.datetime.now(),
-                    deletedAt ='null'
+                    deletedAt = None
                     )
             
             db.session.add(nuevo_course)
@@ -32,7 +32,7 @@ class Courses(Resource):
                 "timeZone":f"{nuevo_course.timeZone}",
                 "institute": f"{nuevo_course.institute}",
                 "createdAt": f"{nuevo_course.createdAt}",
-                "deletedAt": f"{nuevo_course.deletedAt}"
+                "deletedAt": "null"
                 }, 200
         else:
             return {
@@ -49,7 +49,7 @@ class Courses(Resource):
                     courses_list.append(curso)
             if courses_list == []:
                 return {"msg": "No existen los cursos"}, 401
-            return json.dumps(courses_list), 200
+            return [courseModel_schema.dump(c) for c in courses_list], 200
         else:
             return {
                 "msg": "No se pudo hacer la búsqueda"
@@ -118,7 +118,7 @@ class Course(Resource):
                 "msg": "Curso Eliminado correctamente."
             }, 200
     
-    def put(self):
+    def put(self, courseId):
         if  request.is_json:
             parse_json = request.get_json()
             if (parse_json.get('id') is None):
@@ -140,3 +140,7 @@ class Course(Resource):
             return {
                 "msg": "No se pudo modificar el curso"
                 }, 400
+        
+class HealthCheck(Resource):
+    def get(self):
+        return "Pong", 200

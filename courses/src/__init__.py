@@ -1,1 +1,0 @@
-from .CoursesApp import app
