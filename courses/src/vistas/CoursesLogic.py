@@ -31,8 +31,9 @@ class Courses(Resource):
                 "name":f"{nuevo_course.name}",
                 "timeZone":f"{nuevo_course.timeZone}",
                 "institute": f"{nuevo_course.institute}",
-                "createdAt": f"{nuevo_course.createdAt}"
-                }, 201
+                "createdAt": f"{nuevo_course.createdAt}",
+                "deletedAt": f"{nuevo_course.deletedAt}"
+                }, 200
         else:
             return {
                 "msg": "No se pudo crear el curso"
@@ -48,14 +49,27 @@ class Courses(Resource):
                     courses_list.append(curso)
             if courses_list == []:
                 return {"msg": "No existen los cursos"}, 401
-            return json.dumps(courses_list)
+            return json.dumps(courses_list), 200
         else:
             return {
                 "msg": "No se pudo hacer la búsqueda"
                 }, 400
     
 class GetNumCoursesByTimeRange(Resource):
-    pass
+    def get(self):
+        if  request.is_json:
+            parse_json = request.get_json()
+            if (parse_json.get('startTime') is None) or (parse_json.get('endTime') is None):
+                return {"msg": "Parámetros inválidos"}, 401
+            else:
+                startTime = datetime.datetime.strptime(parse_json.get('startTime'), "%Y-%m-%dT%H:%M:%S.%fZ")
+                endTime = datetime.datetime.strptime(parse_json.get('endTime'), "%Y-%m-%dT%H:%M:%S.%fZ")
+                courses = CourseModel.query.filter((CourseModel.createdAt>=startTime and CourseModel.createdAt<endTime)).all()
+                return json.dumps(courses), 200
+        else:
+            return {
+                "msg": "No se pudo hacer la consulta"
+                }, 400
 
 class RestoreDeletedCourse(Resource):
     def put(self, courseId):
@@ -66,7 +80,8 @@ class RestoreDeletedCourse(Resource):
                 }, 400
         else:
             course.deletedAt = None
-            return "Course was restored"
+            db.session.commit()
+            return "Course was restored", 200
 
 class SoftDelete(Resource):
     def put(self, courseId):
@@ -77,7 +92,8 @@ class SoftDelete(Resource):
                 }, 400
         else:
             course.deletedAt = datetime.datetime.now()
-            return str(course.deletedAt)
+            db.session.commit()
+            return str(course.deletedAt), 200
 
 class Course(Resource):
     def get(self, courseId):
@@ -103,6 +119,24 @@ class Course(Resource):
             }, 200
     
     def put(self):
-        if request.is_json:
+        if  request.is_json:
             parse_json = request.get_json()
-            print(parse_json)
+            if (parse_json.get('id') is None):
+                return {"msg": "No se proporcionó id"}, 401
+            if ((parse_json.get('name') is None) 
+            and (parse_json.get('timeZone') is None) 
+            and (parse_json.get('institute') is None)):
+                return {"msg": "Parámetros inválidos"}, 401
+            course = CourseModel.query.get(courseId)
+            if (parse_json.get('name') != None):
+                course.name = parse_json.get('name')
+            if (parse_json.get('timeZone') != None):
+                course.timeZone = parse_json.get('timeZone')
+            if (parse_json.get('institute') != None):
+                course.institute = parse_json.get('institute')
+            db.session.commit()
+            return courseModel_schema.dump(course), 200 
+        else:
+            return {
+                "msg": "No se pudo modificar el curso"
+                }, 400
