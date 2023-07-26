@@ -62,10 +62,14 @@ class GetNumCoursesByTimeRange(Resource):
             if (parse_json.get('startTime') is None) or (parse_json.get('endTime') is None):
                 return {"msg": "Parámetros inválidos"}, 401
             else:
-                startTime = datetime.datetime.strptime(parse_json.get('startTime'), "%Y-%m-%dT%H:%M:%S.%fZ")
-                endTime = datetime.datetime.strptime(parse_json.get('endTime'), "%Y-%m-%dT%H:%M:%S.%fZ")
-                courses = CourseModel.query.filter((CourseModel.createdAt>=startTime and CourseModel.createdAt<endTime)).all()
-                return json.dumps(courses), 200
+                startTime = datetime.datetime.strptime(parse_json.get('startTime'), "%Y-%m-%dT%H:%M:%SZ")
+                endTime = datetime.datetime.strptime(parse_json.get('endTime'), "%Y-%m-%dT%H:%M:%SZ")
+                coursesAfterStartTime = CourseModel.query.filter(CourseModel.createdAt>=startTime).all()
+                courses = []
+                for course in coursesAfterStartTime:
+                    if (course.createdAt < endTime):
+                        courses.append(course)
+                return [courseModel_schema.dump(c) for c in courses], 200
         else:
             return {
                 "msg": "No se pudo hacer la consulta"
