@@ -7,7 +7,7 @@ db = SQLAlchemy()
 
 
 class CourseModel(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String, primary_key=True)
     name = db.Column(db.String(50))
     timeZone = db.Column(db.String(50))
     institute = db.Column(db.String(50))

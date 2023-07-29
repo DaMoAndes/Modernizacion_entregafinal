@@ -44,7 +44,7 @@ class Courses(Resource):
             id_list = request.get_json()
             courses_list = []
             for id in id_list:
-                curso = CourseModel.query.filter((CourseModel.id==int(id))).first()
+                curso = CourseModel.query.filter((CourseModel.id==id)).first()
                 if curso != None:
                     courses_list.append(curso)
             if courses_list == []:
