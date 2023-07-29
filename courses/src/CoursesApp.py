@@ -1,18 +1,18 @@
 from flask import Flask, jsonify, Response
-from .modelos import db
+from modelos import db
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
-from .vistas.CoursesLogic import Courses, Course, GetNumCoursesByTimeRange, SoftDelete, RestoreDeletedCourse, \
+from vistas.CoursesLogic import Courses, Course, GetNumCoursesByTimeRange, SoftDelete, RestoreDeletedCourse, \
     GetNumCoursesByTimeRange, HealthCheck
 
 app = Flask(__name__)
-app.config.from_object("src.config.Config")
+app.config.from_object("config.Config")
 
 
-#@app.before_first_request
+@app.before_first_request
 
-#def create_tables():
-# db.create_all()
+def create_tables():
+    db.create_all()
 
 
 db.init_app(app)
