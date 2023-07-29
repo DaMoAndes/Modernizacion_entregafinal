@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, Response
-from modelos import db
+from .modelos import db
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from vistas.CoursesLogic import Courses, Course, GetNumCoursesByTimeRange, SoftDelete, RestoreDeletedCourse, \
@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.config.from_object("config.Config")
 
 
-@app.before_first_request
+@app.before_first_requeste
 def create_tables():
     db.create_all()
 
