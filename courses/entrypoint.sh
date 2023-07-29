@@ -12,6 +12,6 @@ then
 fi
 
 python manage.py create_db
-gunicorn --bind 0.0.0.0:3000 manage:app
+gunicorn -w 4 -t 120 --bind 0.0.0.0:3000 manage:app
 
 exec "$@"
