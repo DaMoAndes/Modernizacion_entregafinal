@@ -39,7 +39,7 @@ class Courses(Resource):
                 "msg": "No se pudo crear el curso"
                 }, 400
     
-    def get(self):
+    def put(self):
         if  request.is_json:
             id_list = request.get_json()
             courses_list = []
@@ -77,7 +77,7 @@ class GetNumCoursesByTimeRange(Resource):
 
 class RestoreDeletedCourse(Resource):
     def put(self, courseId):
-        course = CourseModel.query.get(int(courseId))
+        course = CourseModel.query.get(courseId)
         if not course:
             return {
                 "msg": "No se encuentra el curso."
@@ -89,7 +89,7 @@ class RestoreDeletedCourse(Resource):
 
 class SoftDelete(Resource):
     def put(self, courseId):
-        course = CourseModel.query.get(int(courseId))
+        course = CourseModel.query.get(courseId)
         if not course:
             return {
                 "msg": "No se encuentra el curso."
