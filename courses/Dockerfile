@@ -8,4 +8,4 @@ RUN apt-get update && apt-get install -y netcat-traditional
 RUN pip install --upgrade pip
 COPY . /courses
 RUN pip install -r requirements.txt
-ENTRYPOINT ["sh","/courses/entrypoint.sh"]
+ENTRYPOINT ["sh","/courses/src/entrypoint.sh"]
