@@ -1,3 +1,7 @@
 env
-venv*
-instance
+venv
+*instance
+src/instance
+*__pycache__
+.pytest_cache
+*.pytest_cache
