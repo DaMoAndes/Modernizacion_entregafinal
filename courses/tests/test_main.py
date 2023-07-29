@@ -1,11 +1,9 @@
 import json
 from unittest import TestCase
-from unittest.mock import patch
 
 from faker import Faker
-from faker.generator import random
 
-from manage import app
+from courses.manage import app
 from src.modelos import Usuario, db
 
 class TestUsuarios(TestCase):

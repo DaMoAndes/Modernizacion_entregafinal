@@ -1,7 +1,7 @@
 import json
 from urllib.parse import urlparse, parse_qs
 from flask_restful import Resource
-from modelos import  db, CourseModel, CourseModelSchema
+from ..modelos import  db, CourseModel, CourseModelSchema
 from flask import request, Response
 import datetime
 
