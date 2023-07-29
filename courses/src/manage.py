@@ -1,3 +1,6 @@
+import sys
+sys.path.insert(0, '~/Modernizacion_entregafinal/courses/src')
+
 from flask.cli import FlaskGroup
 
 from CoursesApp import app
