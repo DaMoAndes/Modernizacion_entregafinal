@@ -1,9 +1,10 @@
 from flask.cli import FlaskGroup
 
-from src import app
-from src.modelos import db
+from CoursesApp import app
+from modelos import db
 
 cli = FlaskGroup(app)
+
 
 @cli.command("create_db")
 def create_db():
