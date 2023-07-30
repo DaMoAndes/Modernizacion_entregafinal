@@ -1,0 +1,246 @@
+{
+	"info": {
+		"_postman_id": "f18b9dc7-541f-4f45-bc45-7382816c3fbb",
+		"name": "ModernizacionCoursesService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20308430",
+		"_collection_link": "https://bold-capsule-66263.postman.co/workspace/8c5eff94-43d8-46ad-9be2-dddf8540ecd7/collection/20308430-f18b9dc7-541f-4f45-bc45-7382816c3fbb?action=share&creator=20308430&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "HealthCheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://34.171.169.145:5000/ping",
+					"protocol": "http",
+					"host": [
+						"34",
+						"171",
+						"169",
+						"145"
+					],
+					"port": "5000",
+					"path": [
+						"ping"
+					]
+				},
+				"description": "Comprueba el funcionamiento del servicio Courses."
+			},
+			"response": []
+		},
+		{
+			"name": "createCourse",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"cursoEjemplo\",\r\n    \"name\": \"Curso de Ejemplo\",\r\n    \"timeZone\": \"Bogota/America\",\r\n    \"institute\": \"UniAndes\"\r\n}"
+				},
+				"url": {
+					"raw": "http://34.171.169.145:5000/Courses",
+					"protocol": "http",
+					"host": [
+						"34",
+						"171",
+						"169",
+						"145"
+					],
+					"port": "5000",
+					"path": [
+						"Courses"
+					]
+				},
+				"description": "Crea un curso en la base de datos. Los parámetros obligatorios en el body de JSON son \"id\" (String), \"name\" (String), \"timeZone\" (String) y \"institute\" (String)."
+			},
+			"response": []
+		},
+		{
+			"name": "getCourse",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://34.171.169.145:5000/Course/cursoEjemplo",
+					"protocol": "http",
+					"host": [
+						"34",
+						"171",
+						"169",
+						"145"
+					],
+					"port": "5000",
+					"path": [
+						"Course",
+						"cursoEjemplo"
+					]
+				},
+				"description": "Obtiene la información de un curso específico. Como parámetro se debe agregar la id del curso al final de la dirección HTTP: ...Course/{id}"
+			},
+			"response": []
+		},
+		{
+			"name": "getCourses",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\"MISW4012\", \"cursoEjemplo\", \"MISW4004\", \"MISW4411\", \"MISW4003\", \"MISW4002\"]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.171.169.145:5000/Courses",
+					"protocol": "http",
+					"host": [
+						"34",
+						"171",
+						"169",
+						"145"
+					],
+					"port": "5000",
+					"path": [
+						"Courses"
+					]
+				},
+				"description": "Debería ser un GET-request, pero por lo que en la clase de Java HttpClient no es posible realizar un GET-request con un body de JSON, se optó por crear un PUT request con el que se obtienen las informaciones de varios cursos.\n\nComo parámetro se deben agregar al body JSON los ids de los cursos solicitados."
+			},
+			"response": []
+		},
+		{
+			"name": "updateCourse",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"cursoEjemplo\",\r\n    \"name\": \"New Course Name\",\r\n    \"timeZone\": \"Europa/Londres\",\r\n    \"institute\": \"CambridgeUniversity\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://34.171.169.145:5000/Course/MISW4002",
+					"protocol": "http",
+					"host": [
+						"34",
+						"171",
+						"169",
+						"145"
+					],
+					"port": "5000",
+					"path": [
+						"Course",
+						"MISW4002"
+					]
+				},
+				"description": "Cambia la información de un cursos específico. Como parámetro se debe agregar la id del curso al final de la dirección HTTP: ...Course/{id}\n\nAdemás, es necesario agregar el id y los nuevos valores para los atributos \"name\", \"timeZone\" y \"institute\". Se puede agregar solo uno o dos valores nuevos, pero tiene que ser por lo menos uno, sino se responde con un mensaje de error."
+			},
+			"response": []
+		},
+		{
+			"name": "SoftdeleteCourse",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://34.171.169.145:5000/Softdelete/cursoEjemplo",
+					"protocol": "http",
+					"host": [
+						"34",
+						"171",
+						"169",
+						"145"
+					],
+					"port": "5000",
+					"path": [
+						"Softdelete",
+						"cursoEjemplo"
+					]
+				},
+				"description": "Con este endpoint se puede poner un curso en la papelera. Como parámetro se debe agregar la id del curso al final de la dirección HTTP: ...Course/{id}\n\nComo respuesta se da el valor del atributo \"deletedAt\" del curso. El sistema legado asigna a la papelera todos los cursos que no tienen el valor \"null\" en el atributo \"deletedAt\"."
+			},
+			"response": []
+		},
+		{
+			"name": "RestoreCourse",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://34.171.169.145:5000/Restore/cursoEjemplo",
+					"protocol": "http",
+					"host": [
+						"34",
+						"171",
+						"169",
+						"145"
+					],
+					"port": "5000",
+					"path": [
+						"Restore",
+						"cursoEjemplo"
+					]
+				},
+				"description": "Con este endpoint se puede sacar un curso de la papelera. Como parámetro se debe agregar la id del curso al final de la dirección HTTP: ...Course/{id}\n\nAl hacer un GET-request se puede comprobar que el atributo \"deletedAt\" del curso volvió a tener el valor \"null\"."
+			},
+			"response": []
+		},
+		{
+			"name": "deleteCourse",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://34.171.169.145:5000/Course/cursoEjemplo",
+					"protocol": "http",
+					"host": [
+						"34",
+						"171",
+						"169",
+						"145"
+					],
+					"port": "5000",
+					"path": [
+						"Course",
+						"cursoEjemplo"
+					]
+				},
+				"description": "Elimina un curso de la base de datos. Como parámetro se debe agregar la id del curso al final de la dirección HTTP: ...Course/{id}"
+			},
+			"response": []
+		}
+	]
+}
