@@ -1,6 +1,5 @@
 # Microservicio Courses
-Este microservicio se encarga del manejo de los datos y las operaciones funcionales relacionadas al dominio "Course" de la aplicación [Teammates](https://github.com/ChristianBorrasTorres/teammates).  
-Efectivamente, reemplaza la clase coursesDb.java que en el sistema legado manejó las peticiones a la base de datos compartida por todos los componentes del sistema. En cambio, el servicio Courses tiene su propia base de datos:  
+Este microservicio se encarga del manejo de los datos y las operaciones funcionales relacionadas al dominio "Course" de la aplicación [Teammates](https://github.com/ChristianBorrasTorres/teammates). Efectivamente, reemplaza la clase coursesDb.java que en el sistema legado manejó las peticiones a la base de datos compartida por todos los componentes del sistema. En cambio, el servicio Courses tiene su propia base de datos:  
 ![imagen](https://github.com/DaMoAndes/Modernizacion_entregafinal/assets/98788512/a2b21825-0343-478b-bf48-c3750969eb1b)
 
 # Funcionalidades
@@ -20,7 +19,7 @@ http://34.171.169.145:5000
 Si prefiere enviar las peticiones HTTP a una instancia desplegada en su máquina local, debe reemplazar la dirección HTTP por la que se configuró, por ejemplo "localhost:5000".
 
 # Integrantes Grupo 1:
-*ZARAY VIVIANA REY VIVIESCAS
-*CHRISTIAN BORRÁS TORRES
-*DAVID MORALES AGUILAR
-*PATRICK MYKODA
+* ZARAY VIVIANA REY VIVIESCAS
+* CHRISTIAN BORRÁS TORRES
+* DAVID MORALES AGUILAR
+* PATRICK MYKODA
